@@ -16,7 +16,7 @@ from task import TaskName
 def run_teleop(task_name, stage, stop_event):
     threading.Thread(target=start_flask, daemon=True).start()
     sim = AlohaSimConfig()
-    sim.viewer = "stream"
+    sim.viewer = "mujoco_stream"
     sim.task_name = get_env_task_name(task_name, stage)
     robot = GellohaConfig()
     control = TeleoperateControlConfig()
@@ -28,7 +28,7 @@ def run_teleop(task_name, stage, stop_event):
 def run_policy(task_name, stage, model, stop_event):
     threading.Thread(target=start_flask, daemon=True).start()
     sim = AlohaSimConfig()
-    sim.viewer = "mujoco"
+    sim.viewer = "mujoco_stream"
     sim.task_name = get_env_task_name(task_name, stage)
     robot = GellohaConfig()
     policy_path = get_policy_path(task_name, model)
