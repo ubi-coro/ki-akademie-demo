@@ -1,21 +1,10 @@
 from nicegui import app, ui
-from start_page import start_site
 from views import build_start_view
 
 app.add_static_files('/static', 'static')
 
 ui.add_head_html('''
 <style>
-  html, body, #app, main, .q-layout, .q-page-container, .nicegui-content {
-    padding: 0 !important;
-  }
-  
-  .q-page-container {
-  margin-top: 0 !important;
-  padding-top: 0 !important;
-  height: 100% !important;
-}
-
   html.dark, body.dark, .q-body.dark {
     background-color: #3a3a3a !important;
   }
@@ -44,6 +33,8 @@ ui.add_head_html('''
     margin-top: 0 !important;
     padding-top: 0 !important;
   }
+  
+  body { overflow: hidden !important; }
 </style>
 ''')
 
