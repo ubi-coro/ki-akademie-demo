@@ -1,6 +1,7 @@
 import cv2
 from lerobot.common.sim.viewer import AbstractViewer
 from comms.global_frame import set_current_frame, frame_lock
+import mujoco.viewer
 
 @AbstractViewer.register_subclass("stream")
 class StreamViewer(AbstractViewer):
@@ -26,3 +27,38 @@ class StreamViewer(AbstractViewer):
             image_bgr = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             _, jpeg = cv2.imencode('.jpg', image_bgr)
             set_current_frame(key, jpeg.tobytes())
+
+@AbstractViewer.register_subclass("mujoco_stream")
+class MujocoStreamViewer(AbstractViewer):
+    def __init__(self, model, data, image_keys=None, viewer=None, **kwargs):
+        print("Init Viewer")
+        self.viewer = viewer
+        self.image_keys = image_keys
+        self.model = model
+        self.data = data
+        self.running = False
+
+    def start(self):
+        if not self.is_running():
+            print("first start")
+            self.viewer = mujoco.viewer.launch_passive(self.model, self.data, show_left_ui=False, show_right_ui=False)
+            self.viewer.user_scn.flags[mujoco.mjtRndFlag.mjRND_SHADOW] = 0
+            self.viewer.user_scn.flags[mujoco.mjtRndFlag.mjRND_REFLECTION] = 0
+            self.viewer.user_scn.flags[mujoco.mjtRndFlag.mjRND_SKYBOX] = 0
+            self.viewer.user_scn.flags[mujoco.mjtRndFlag.mjRND_HAZE] = 0
+            self.viewer.user_scn.flags[mujoco.mjtRndFlag.mjRND_CULL_FACE] = 0
+            self.running = True
+        else:
+            print("reload")
+            self.viewer._model = self.model
+            self.viewer._data = self.data
+
+    def stop(self):
+        pass
+
+    def is_running(self):
+        return self.viewer.is_running() if self.viewer else False
+
+    def sync(self, observation):
+        if self.viewer:
+            self.viewer.sync()

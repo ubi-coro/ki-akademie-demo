@@ -1,11 +1,17 @@
 from dataclasses import dataclass
 
+class TaskName:
+    PLACE_CUBE = 'Place Cube'
+    INSERTION = 'Insertion'
+    BUILD_PYRAMID = 'Build Pyramid'
+
+tasks = [TaskName.PLACE_CUBE, TaskName.BUILD_PYRAMID, TaskName.INSERTION]
 
 def getTask(name: str):
     _task_registry = {
-        "Place Cube": PlaceCubeTask(),
-        "Insertion": InsertionTask(),
-        "Build Pyramid": PyramidTask(),
+        TaskName.PLACE_CUBE: PlaceCubeTask(),
+        TaskName.INSERTION: InsertionTask(),
+        TaskName.BUILD_PYRAMID: PyramidTask(),
     }
     return _task_registry[name]
 
@@ -22,9 +28,9 @@ class Task:
 class PlaceCubeTask(Task):
     def __init__(self):
         super().__init__(
-            title="Place Cube",
+            title=TaskName.PLACE_CUBE,
             description='Grab the red stick and position it exactly on the target represented by a blue circle.',
-            image_path='/static/proxy-image.png',
+            image_path='/static/pick_and_place.png',
             video_path='',
             stages={
                 "stage 1": "Orientation Red Stick: Fixed; Goal Position: Fixed",
@@ -37,23 +43,23 @@ class PlaceCubeTask(Task):
 class InsertionTask(Task):
     def __init__(self):
         super().__init__(
-            title="Insertion",
-            description='Hebe den roten Stabe und das Blaue Rohr an und schiebe den roten Stab in das blaue Rohr.',
-            image_path='/static/proxy-image.png',
+            title=TaskName.INSERTION,
+            description='Pick up the red rod and the blue tube, then insert the red rod into the blue tube.',
+            image_path='/static/insertion.png',
             video_path='',
             stages={
-                "stage 1": "Gleiche Orientierung, feste Zuteilung: links: blaues Rohr, rechts: roter Stab",
-                "stage 2": "Zufällige Orientierung, feste Zuteilung: links: blaues Rohr, rechts: roter Stab",
-                "stage 3": "Zufällige Orientierung, Objeckte zufällig platziert",
+                "stage 1": "Fixed orientation, fixed position assignment: left – blue tube, right – red rod",
+                "stage 2": "Random orientation, fixed position assignment: left – blue tube, right – red rod",
+                "stage 3": "Random orientation, random assignment",
             }
         )
 
 class PyramidTask(Task):
     def __init__(self):
         super().__init__(
-            title="Build Pyramid",
-            description='Stack the dice. The red cube should be at the bottom, the yellow cube in the middle, and the green cube on top.',
-            image_path='/static/proxy-image.png',
+            title=TaskName.BUILD_PYRAMID,
+            description='Stack the cubes. The red cube should be at the bottom, the yellow cube in the middle, and the green cube on top.',
+            image_path='/static/stacking.png',
             video_path='',
             stages={
                 "stage 1": "TODO",

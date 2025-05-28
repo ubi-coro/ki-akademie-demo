@@ -2,12 +2,13 @@ import threading
 
 from nicegui import ui
 
-from control_simulation import run_teleop
-from tasks import tasks, getTask, Task
+from control_simulation import run_teleop, run_policy
+from task import tasks, getTask, Task
 
 selected_task = {'value': 'Place Cube'}
 
 start_view = ui.column().classes('items-center justify-center h-screen w-full')
+tele_operator_view = ui.column().classes('p-8 hidden')
 task_view = ui.column().classes('p-8 hidden')
 camera_view = ui.column().classes('p-8 hidden')
 
@@ -38,23 +39,50 @@ def handle_teleop(task: str, stage: str):
         camera_shown['value'] = True
 
 def handle_ai_model(task: str, stage: str, ai_model: str):
-    print(f"AI model execution started {task, stage, ai_model}")
+    global teleop_thread, stop_event
+    print(f"Task: {task}, Stage: {stage}, AIModel: {ai_model}")
+    # Stop current simulation if running
+    if teleop_thread and teleop_thread.is_alive():
+        print("Stopping existing sim")
+        stop_event.set()
+        teleop_thread.join()
+    print("sim stopped")
+    # Start new simulation
+    stop_event = threading.Event()
+    teleop_thread = threading.Thread(
+        target=run_policy,
+        args=(task, stage, ai_model, stop_event),
+        daemon=True
+    )
+    teleop_thread.start()
+
+    if not camera_shown['value']:
+        camera_view.classes(remove='hidden')
+        camera_shown['value'] = True
 
 def show_task_view(task):
+    print(f"Task: {task}")
+    handle_teleop(task, 'stage 1')
     selected_task['value'] = task
     start_view.classes(remove='items-center h-screen')
     task_view.classes(remove='hidden')
     camera_view.classes(remove='hidden')
+
+    tele_operator_view.classes(remove='hidden')
+    tele_operator_view.clear()
     task_view.clear()
     camera_view.clear()
 
     task_obj: Task = getTask(task)
 
+    with tele_operator_view:
+        ui.image(f'http://localhost:5000/video_feed?cam=teleoperator_pov').style(
+            'width: 768px; height: 576px; object-fit: cover; margin-bottom: 10px;')
     with task_view:
-        with ui.column().style('width: 800px; margin-right: 100px;'):
+        with ui.column().style('width: 800px; margin-right: 300px;'):
             ui.label(task_obj.title).classes('text-5xl font-bold')
             ui.label(task_obj.description).classes('text-2xl')
-            ui.image(f'/static/proxy-image.png').classes('max-w-full mt-4')
+            ui.image(task_obj.image_path).classes('max-w-full mt-4')
 
             ui.label("Task Difficulty").classes('text-5xl font-bold mt-8')
             ui.label("There are different difficulty levels for this task. Choose one!").classes('text-2xl')
@@ -93,9 +121,9 @@ def build_start_view():
 
     # Layout both views side-by-side at startup
     with ui.row().classes('w-full'):
-        global task_view, camera_view
+        global task_view, camera_view, tele_operator_view
+        tele_operator_view = ui.column().classes('p-8 hidden').style('flex: 1')
         task_view = ui.column().classes('p-8 hidden').style('flex: 1')
         camera_view = ui.column().classes('p-8 hidden').style('flex: 4')
 
 
-# ui.run()

@@ -5,7 +5,6 @@ import time
 app = Flask(__name__)
 
 def generate_stream(cam_id):
-    print("generating stream")
     while True:
         frame = get_current_frame(cam_id)
         if frame:
@@ -19,7 +18,6 @@ def generate_stream(cam_id):
 
 @app.route('/video_feed')
 def video_feed():
-    print("video feed")
     cam_id = request.args.get('cam', 'default_cam')
     return Response(generate_stream(cam_id), mimetype='multipart/x-mixed-replace; boundary=frame')
 
