@@ -5,7 +5,7 @@ class TaskName:
     INSERTION = 'Insertion'
     BUILD_PYRAMID = 'Tower Stacking'
 
-tasks = [TaskName.PLACE_CUBE, TaskName.BUILD_PYRAMID, TaskName.INSERTION]
+tasks = [TaskName.PLACE_CUBE, TaskName.INSERTION, TaskName.BUILD_PYRAMID]
 
 def getTask(name: str):
     _task_registry = {
@@ -20,6 +20,7 @@ def getTask(name: str):
 class Task:
     title: str
     description: str
+    user_task: str
     image_path: str
     video_path: str
     stages: dict[str, str]
@@ -30,6 +31,7 @@ class PlaceCubeTask(Task):
         super().__init__(
             title=TaskName.PLACE_CUBE,
             description='Grab the red stick and position it exactly on the target represented by a blue circle.',
+            user_task='Play around with the task difficulty and the data the AI-model is trained on.',
             image_path='/static/pick_and_place.png',
             video_path='',
             stages={
@@ -45,6 +47,7 @@ class InsertionTask(Task):
         super().__init__(
             title=TaskName.INSERTION,
             description='Pick up the red rod and the blue tube, then insert the red rod into the blue tube.',
+            user_task='Try solving the task yourself, then watch the AI model perform it. What challenges do you encounter? When and why does the model fail?',
             image_path='/static/insertion.png',
             video_path='',
             stages={
@@ -59,6 +62,7 @@ class PyramidTask(Task):
         super().__init__(
             title=TaskName.BUILD_PYRAMID,
             description='Stack the cubes. The red cube should be at the bottom, the yellow cube in the middle, and the green cube on top.',
+            user_task='Try solving the task yourself, then watch the AI model perform it. What challenges do you encounter? When and why does the model fail?',
             image_path='/static/stacking.png',
             video_path='',
             stages={
