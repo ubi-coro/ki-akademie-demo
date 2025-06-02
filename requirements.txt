@@ -1,0 +1,7 @@
+Flask==3.1.1
+mujoco==3.3.1
+nicegui==2.18.0
+numpy==2.2.6
+dynamixel_sdk
+git+https://github.com/ubi-coro/lerobot_control_sim#egg=lerobot
+git+https://github.com/ubi-coro/gym-aloha#egg=gym_aloha
