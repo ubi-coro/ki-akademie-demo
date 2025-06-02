@@ -216,7 +216,7 @@ def show_information():
             with ui.list().classes('list-disc ml-6 text-base'):
                 ui.html("<li><b>Architecture:</b> Action Chunking Transformer</li>").classes('text-3xl').style('margin-top: 18px;')
                 ui.html("<li><b>Behavior Cloning:</b> Only supervised, offline learning</li>").classes('text-3xl').style('margin-top: 18px;')
-                ui.html("<li><b>Input:</b> 4 cameras images (640x480x3) and current robot state (2 x 7 Joints)</li>").classes('text-3xl').style('margin-top: 18px;')
+                ui.html("<li><b>Input:</b> 4 cameras images (480x640x3) and current robot state (2 x 7 Joints)</li>").classes('text-3xl').style('margin-top: 18px;')
                 ui.html("<li><b>Output:</b>  30-step action sequences (1 second)</li>").classes('text-3xl').style('margin-top: 18px;')
                 ui.html("<li><b>Stateless:</b> no temporal history, only single-step inference.</li>").classes('text-3xl').style('margin-top: 18px;')
 
@@ -233,11 +233,11 @@ def show_information():
 
             with ui.list().classes('list-disc ml-6 text-base'):
                 ui.html("<li><b>Out of Distribution:</b> mismatch between training and real-world data distributions.</li>").classes('text-3xl').style('margin-top: 18px;')
-                ui.html("<li><b>Covariate shift:</b> change in input state-action distribution affecting model performance.</li>").classes('text-3xl').style('margin-top: 18px;')
+                ui.html("<li><b>Covariate shift</b></li>").classes('text-3xl').style('margin-top: 18px;')
 
 
         with ui.column().style('width: 1600px;'):
-            ui.image("").classes('mt-4')
+            ui.image("/static/architecture.png").classes('mt-4')
 
 
 def build_start_view():
