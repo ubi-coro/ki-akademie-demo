@@ -117,10 +117,10 @@ def show_pick_and_place_view(task_obj: Task):
         with ui.column().style('width: 1600px;'):
             ui.image(task_obj.image_path).classes('mt-4')
         with ui.row().classes('mt-6 gap-4'):
-            ui.button('Start Teleoperation', on_click=lambda: handle_teleop(task_obj.title, '')).classes(
+            ui.button('Start Teleoperation', on_click=lambda: handle_teleop(task_obj.title, stage_radio.value)).classes(
                 'w-80 text-xl px-6 py-2')
             ui.button('Run AI Model',
-                      on_click=lambda: handle_ai_model(task_obj.title, '', '')).classes(
+                      on_click=lambda: handle_ai_model(task_obj.title, stage_radio.value, ai_radio.value)).classes(
                 'w-80 text-xl px-6 py-2')
 
 
@@ -237,7 +237,7 @@ def show_information():
 
 
         with ui.column().style('width: 1600px;'):
-            ui.image("/static/architecture.png").classes('mt-4')
+            ui.image("/static/architecture.pn g").classes('mt-4').style("margin-top: 180px;")
 
 
 def build_start_view():
