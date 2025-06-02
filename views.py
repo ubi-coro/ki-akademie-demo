@@ -40,13 +40,6 @@ def handle_teleop(task: str, stage: str):
 def handle_ai_model(task: str, stage: str, ai_model: str):
     global teleop_thread, stop_event
     print(f"Task: {task}, Stage: {stage}, AIModel: {ai_model}")
-    # Stop current simulation if running
-    if teleop_thread and teleop_thread.is_alive():
-        print("Stopping existing sim")
-        stop_event.set()
-        teleop_thread.join()
-    print("sim stopped")
-    # Start new simulation
     stop_event = threading.Event()
     teleop_thread = threading.Thread(
         target=run_policy,

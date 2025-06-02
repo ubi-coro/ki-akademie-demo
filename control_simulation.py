@@ -23,6 +23,7 @@ def run_teleop(task_name, stage, stop_event):
     cfg = SimControlPipelineConfig(sim=sim, robot=robot, control=control)
 
     control_sim_robot(cfg, stop_event)
+    print("DONE TELEOP")
 
 
 def run_policy(task_name, stage, model, stop_event):
@@ -40,6 +41,7 @@ def run_policy(task_name, stage, model, stop_event):
     control.policy.pretrained_path = policy_path
     cfg = SimControlPipelineConfig(sim=sim, robot=robot, control=control)
     control_sim_robot(cfg, stop_event)
+    print("DONE POLICY")
 
 def get_env_task_name(task_name: str, stage: int):
     if task_name == TaskName.BUILD_PYRAMID:
@@ -56,13 +58,15 @@ def get_env_task_name(task_name: str, stage: int):
 
 def get_policy_path(task_name, model):
     if task_name == TaskName.BUILD_PYRAMID:
-        r =  "/media/local/outputs/train/stack_cubes/checkpoints/last/pretrained_model"
+        r =  "/media/local/outputs/train/stacking_jonas/checkpoints/006000/pretrained_model"
     elif task_name == TaskName.INSERTION:
-        r =  "/media/local/outputs/train/insertion/checkpoints/last/pretrained_model"
+        r =  "/media/local/outputs/train/insertion_new/checkpoints/last/pretrained_model"
     elif task_name == TaskName.PLACE_CUBE and model == "stage 1":
         r =  "/media/local/outputs/train/stage_0/checkpoints/last/pretrained_model"
     elif task_name == TaskName.PLACE_CUBE and model == "stage 2":
         r =  "/media/local/outputs/train/stage_1/checkpoints/last/pretrained_model"
     else:
         r =  "/media/local/outputs/train/stage_2/checkpoints/last/pretrained_model"
+    print()
+    print(f"Policy path: {r}")
     return r

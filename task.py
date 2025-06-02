@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
 class TaskName:
-    PLACE_CUBE = 'Place Cube'
+    PLACE_CUBE = 'Pick and Place'
     INSERTION = 'Insertion'
-    BUILD_PYRAMID = 'Build Pyramid'
+    BUILD_PYRAMID = 'Tower Stacking'
 
 tasks = [TaskName.PLACE_CUBE, TaskName.BUILD_PYRAMID, TaskName.INSERTION]
 
