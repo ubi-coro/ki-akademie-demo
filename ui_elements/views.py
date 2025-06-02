@@ -2,8 +2,8 @@ import threading
 
 from nicegui import ui
 
-from control_simulation import run_teleop, run_policy
-from task import tasks, getTask, Task, TaskName
+from ui_elements.control_simulation import run_teleop, run_policy
+from ui_elements.task import tasks, getTask, Task, TaskName
 
 selected_task = {'value': 'Place Cube'}
 

@@ -9,7 +9,7 @@ import threading
 
 from comms.stream_server import start_flask
 from comms import sim_viewer
-from task import TaskName
+from ui_elements.task import TaskName
 
 
 def run_teleop(task_name, stage, stop_event):

@@ -1,5 +1,5 @@
 from nicegui import ui
-from task import getTask, Task
+from ui_elements.task import getTask, Task
 
 from nicegui import app
 
