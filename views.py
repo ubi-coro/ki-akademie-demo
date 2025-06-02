@@ -237,7 +237,7 @@ def show_information():
 
 
         with ui.column().style('width: 1600px;'):
-            ui.image("/static/architecture.pn g").classes('mt-4').style("margin-top: 180px;")
+            ui.image("/static/architecture.png").classes('mt-4').style("margin-top: 180px;")
 
 
 def build_start_view():

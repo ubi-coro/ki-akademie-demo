@@ -7,7 +7,6 @@ from lerobot.scripts.control_sim_robot import control_sim_robot
 
 import threading
 
-from comms.viewer_singleton import get_viewer
 from comms.stream_server import start_flask
 from comms import sim_viewer
 from task import TaskName
